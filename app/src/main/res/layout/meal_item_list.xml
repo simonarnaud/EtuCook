@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp">
+
+    <ImageView android:layout_width="24dp"
+               android:layout_height="24dp"
+               android:id="@+id/meal_image"
+               android:src="@drawable/ingredient_icon"
+    />
+
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:layout_marginLeft="8dp"
+              android:layout_marginStart="8dp"
+              android:id="@+id/name_meal"
+              android:textColor="@color/design_default_color_primary_dark"
+              android:layout_toRightOf="@+id/meal_image"
+              android:layout_toEndOf="@+id/meal_image"
+              android:layout_toLeftOf="@+id/cost_meal"
+              android:layout_toStartOf="@+id/cost_meal"/>
+
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:textColor="@color/colorPrimaryDark"
+              android:id="@+id/cost_meal"
+              android:layout_marginRight="8dp"
+              android:layout_marginEnd="8dp"
+              android:layout_alignParentRight="true"
+              android:layout_alignParentEnd="true"/>
+
+</RelativeLayout>

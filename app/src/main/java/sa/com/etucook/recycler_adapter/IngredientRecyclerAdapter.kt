@@ -1,4 +1,4 @@
-package sa.com.etucook.recyclerAdapter
+package sa.com.etucook.recycler_adapter
 
 
 import android.view.LayoutInflater
@@ -44,7 +44,7 @@ class IngredientRecyclerAdapter(ingredients: ArrayList<Ingredient>, listener: On
     }
 
     class RecyclerViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        var mName = itemView.findViewById<TextView>(R.id.name_ingredient)!!
+        var mName = itemView.findViewById<TextView>(R.id.name_ingredient)
         var mCost = itemView.findViewById<TextView>(R.id.cost_ingredient)
 
         fun bind(ingredient: Ingredient, listener: OnItemClickListener) {

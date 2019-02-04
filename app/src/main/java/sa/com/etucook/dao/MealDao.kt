@@ -1,5 +1,6 @@
 package sa.com.etucook.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import androidx.room.OnConflictStrategy.REPLACE
 import sa.com.etucook.model.Ingredient
@@ -9,7 +10,7 @@ import sa.com.etucook.model.Meal
 interface MealDao {
 
     @Query("SELECT * from meal_table")
-    fun getAllMeals(): List<Meal>
+    fun getAllMeals(): LiveData<List<Meal>>
 
     @Insert(onConflict = REPLACE)
     fun insert(meal: Meal)

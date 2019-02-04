@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import sa.com.etucook.database.EtuCoockDataBase
 import sa.com.etucook.model.Ingredient
-import sa.com.etucook.recyclerAdapter.IngredientRecyclerAdapter
+import sa.com.etucook.recycler_adapter.IngredientRecyclerAdapter
 
 class PrincipalFragment : Fragment(), IngredientRecyclerAdapter.OnItemClickListener {
 
