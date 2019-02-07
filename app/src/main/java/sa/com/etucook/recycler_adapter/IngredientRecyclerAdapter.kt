@@ -1,6 +1,8 @@
 package sa.com.etucook.recycler_adapter
 
 
+import android.content.ContentUris
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +18,7 @@ class IngredientRecyclerAdapter(ingredients: ArrayList<Ingredient>, listener: On
     private var listenerIngredient: OnItemClickListener  = listener
 
     interface OnItemClickListener {
-        fun onItemClick(ingredient: Ingredient)
+        fun onItemClick(ingredient: Ingredient, position: Int)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IngredientRecyclerAdapter.RecyclerViewHolder {
@@ -49,7 +51,7 @@ class IngredientRecyclerAdapter(ingredients: ArrayList<Ingredient>, listener: On
 
         fun bind(ingredient: Ingredient, listener: OnItemClickListener) {
             itemView.setOnClickListener {
-                listener.onItemClick(ingredient)
+                listener.onItemClick(ingredient, adapterPosition)
             }
         }
     }

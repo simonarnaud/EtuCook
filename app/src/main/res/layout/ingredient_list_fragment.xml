@@ -6,7 +6,7 @@
         android:id="@+id/principal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".PrincipalFragment">
+        tools:context=".fragments.PrincipalFragment">
 
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/ingredient_recycler_view"

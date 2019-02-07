@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">EtuCook</string>
+    <string name="add_ingredient">Add an ingredient</string>
 </resources>

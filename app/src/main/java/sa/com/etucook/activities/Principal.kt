@@ -1,8 +1,10 @@
-package sa.com.etucook
+package sa.com.etucook.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import sa.com.etucook.R
 import sa.com.etucook.database.EtuCoockDataBase
+import sa.com.etucook.fragments.PrincipalFragment
 import sa.com.etucook.model.Ingredient
 import sa.com.etucook.model.IngredientMealJoin
 import sa.com.etucook.model.Meal
@@ -52,6 +54,7 @@ class Principal : AppCompatActivity() {
 
         val taskGetAll = Runnable {
             val ingredients = mEtuCoockDataBase?.ingredientDao()?.getAllIngredients()
+            println(ingredients?.value?.size)
             println(ingredients?.value?.get(0)?.ingredientName)
            idTestIngredient = ingredients?.value?.get(0)?.id
         }
@@ -77,9 +80,9 @@ class Principal : AppCompatActivity() {
 
         val taskGetAll = Runnable {
             val meals = mEtuCoockDataBase?.mealDao()?.getAllMeals()
-            println(meals?.size)
-            println(meals?.get(0)?.mealName)
-            idTestMeal = meals?.get(0)?.id
+            println(meals?.value?.size)
+            println(meals?.value?.get(0)?.mealName)
+            idTestMeal = meals?.value?.get(0)?.id
         }
         mDataBaseThreadWorker.postTask(taskGetAll)
 

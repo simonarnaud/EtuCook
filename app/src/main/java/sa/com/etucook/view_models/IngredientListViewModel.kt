@@ -1,4 +1,4 @@
-package sa.com.etucook
+package sa.com.etucook.view_models
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -8,7 +8,7 @@ import sa.com.etucook.database.EtuCoockDataBase
 import sa.com.etucook.model.Ingredient
 import sa.com.etucook.threadWorker.DataBaseThreadWorker
 
-class PrincipalViewModel(application: Application) : AndroidViewModel(application) {
+class IngredientListViewModel(application: Application) : AndroidViewModel(application) {
 
     private val _data = MutableLiveData<String>()
     private val mEtuCoockDataBase: EtuCoockDataBase

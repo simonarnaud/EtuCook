@@ -1,4 +1,4 @@
-package sa.com.etucook
+package sa.com.etucook.fragments
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -7,6 +7,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.ingredient_list_fragment.*
+import sa.com.etucook.view_models.IngredientListViewModel
+import sa.com.etucook.R
 import sa.com.etucook.database.EtuCoockDataBase
 import sa.com.etucook.model.Ingredient
 import sa.com.etucook.recycler_adapter.IngredientRecyclerAdapter
@@ -23,14 +26,14 @@ class PrincipalFragment : Fragment(), IngredientRecyclerAdapter.OnItemClickListe
         fun newInstance() = PrincipalFragment()
     }
 
-    private lateinit var viewModel: PrincipalViewModel
+    private lateinit var viewModel: IngredientListViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
         //pas sur
         db = EtuCoockDataBase.getInstance()
 
-        val rootView = inflater.inflate(R.layout.principal_fragment, container, false)
+        val rootView = inflater.inflate(R.layout.ingredient_list_fragment, container, false)
         ingredientRecyclerView = rootView.findViewById(R.id.ingredient_recycler_view) as RecyclerView
         ingredientRecyclerView!!.layoutManager = LinearLayoutManager(activity)
         ingredientRecyclerView!!.adapter = recyclerViewAdapter
@@ -40,23 +43,23 @@ class PrincipalFragment : Fragment(), IngredientRecyclerAdapter.OnItemClickListe
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        viewModel = ViewModelProviders.of(this).get(PrincipalViewModel::class.java)
+        viewModel = ViewModelProviders.of(this).get(IngredientListViewModel::class.java)
 
         viewModel.getListIngredients().observe(this, Observer { ingredients -> recyclerViewAdapter.addIngredients(ingredients!!) })
 
         //floating action button
-        /*ingredient_floating_action_button.setOnClickListener {
-            var intent = Intent(applicationContext, ContactDetailsActivity::class.java)
-            startActivity(intent)
-        }*/
+        ingredient_floating_action_button.setOnClickListener {
 
+            //var intent = Intent(applicationContext, ContactDetailsActivity::class.java)
+            //startActivity(intent)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_ingredient, menu)
     }
 
-    override fun onItemClick(ingredient: Ingredient) {
+    override fun onItemClick(ingredient: Ingredient, position: Int) {
         //changer activity
         /* var intent = Intent(applicationContext, ChangerActivity::class.java)
          intent.putExtra("idIngredient", ingredient.id)
@@ -77,4 +80,5 @@ class PrincipalFragment : Fragment(), IngredientRecyclerAdapter.OnItemClickListe
     private fun deleteAllIngredients() {
         db!!.ingredientDao().deleteAllIngredients()
     }
+
 }
