@@ -4,9 +4,13 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.ingredient_fragment.*
 import sa.com.etucook.R
 import sa.com.etucook.database.EtuCoockDataBase
+import sa.com.etucook.view_models.IngredientViewModel
+import sa.com.etucook.view_models.viewModelFactory
 
 class IngredientFragment : Fragment() {
 
@@ -20,7 +24,9 @@ class IngredientFragment : Fragment() {
         }
     }
 
+
     private var ingredientUri: Uri? = null
+    private var ingredientId: Long? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,9 +34,7 @@ class IngredientFragment : Fragment() {
         ingredientUri = savedInstanceState?.getParcelable(EXTRA_INGREDIENT_URI)?: arguments?.getParcelable(
             EXTRA_INGREDIENT_URI)
 
-        val ingredientId = ingredientUri?.getQueryParameter("ingredient_id")
-        println("Ingredient id : " + ingredientId)
-        //appel vm
+        ingredientId = ingredientUri?.getQueryParameter("ingredient_id")?.toLong()
 
         /*ingredientUri?.let {
             loaderManager.initLoader(0, null, this)
@@ -46,22 +50,19 @@ class IngredientFragment : Fragment() {
         return inflater.inflate(R.layout.ingredient_fragment, container, false)
     }
 
+    private lateinit var viewModel: IngredientViewModel
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initContent()
+
+         viewModel = ViewModelProviders.of(this, viewModelFactory { IngredientViewModel(activity!!.application,ingredientId!!)}).get(IngredientViewModel::class.java)
+         viewModel.ingredient.observe(this, Observer { /*attention !*/ ingredient_name.setText(it.ingredientName)
+                                                              ingredient_cost.setText(it.id.toString())})
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         EtuCoockDataBase.destroyInstance()
-    }
-
-    //a virer plus tard
-    private fun initContent() {
-        activity.let {
-            ingredient_name.text = "test"
-            ingredient_cost.text = "test"
-        }
     }
 
    /* override fun onPrepareOptionsMenu(menu: Menu) {

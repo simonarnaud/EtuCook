@@ -62,7 +62,7 @@ class Principal : AppCompatActivity() {
 
         val taskGetById = Runnable {
             val ingredientById = mEtuCoockDataBase?.ingredientDao()?.getIngredientById(idTestIngredient!!)
-            println("Ingredient : " + ingredientById?.ingredientName)
+            println("Ingredient : " + ingredientById?.value?.ingredientName)
         }
         mDataBaseThreadWorker.postTask(taskGetById)
     }

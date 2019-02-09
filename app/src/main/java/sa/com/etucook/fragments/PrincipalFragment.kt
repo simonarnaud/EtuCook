@@ -45,7 +45,7 @@ class PrincipalFragment : Fragment(), IngredientRecyclerAdapter.OnItemClickListe
 
         viewModel = ViewModelProviders.of(this).get(IngredientListViewModel::class.java)
 
-        viewModel.getListIngredients().observe(this, Observer { ingredients -> recyclerViewAdapter.addIngredients(ingredients!!) })
+        //viewModel.getListIngredients().observe(this, Observer { ingredients -> recyclerViewAdapter.addIngredients(ingredients!!) })
 
         //floating action button
         ingredient_floating_action_button.setOnClickListener {

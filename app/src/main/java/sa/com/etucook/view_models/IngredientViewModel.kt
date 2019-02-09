@@ -8,20 +8,12 @@ import sa.com.etucook.model.Ingredient
 import sa.com.etucook.repository.IngredientRepos
 import sa.com.etucook.threadWorker.DataBaseThreadWorker
 
-class IngredientListViewModel(application: Application) : AndroidViewModel(application) {
+class IngredientViewModel(application: Application, ingredientId: Long) : AndroidViewModel(application) {
 
     private val ingredientRepos = IngredientRepos(application)
-    var ingredients: LiveData<List<Ingredient>>
+    var ingredient: LiveData<Ingredient>
 
     init {
-        ingredients = ingredientRepos.ingredients
-    }
-
-    fun addIngredient(ingredient: Ingredient) {
-        ingredientRepos.insertIngredient(ingredient)
-    }
-
-    fun deleteAllIngredients() {
-        ingredientRepos.deleteAllIngredients()
+        ingredient = ingredientRepos.getIngredientById(ingredientId)
     }
 }

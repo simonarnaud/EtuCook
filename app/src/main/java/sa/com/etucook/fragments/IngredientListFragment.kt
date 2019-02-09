@@ -1,5 +1,6 @@
 package sa.com.etucook.fragments
 
+import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
@@ -14,13 +15,15 @@ import sa.com.etucook.database.EtuCoockDataBase
 import sa.com.etucook.model.Ingredient
 import sa.com.etucook.recycler_adapter.IngredientRecyclerAdapter
 import sa.com.etucook.view_models.IngredientListViewModel
+import sa.com.etucook.view_models.viewModelFactory
+import java.lang.RuntimeException
 
 class IngredientListFragment: Fragment(), IngredientRecyclerAdapter.OnItemClickListener {
 
     interface OnSomethingMoveInListFragment {
         fun onIngredientSelected(ingredientUri: Uri, position: Int)
     }
-    private val listener: OnSomethingMoveInListFragment? = null
+    private var listener: OnSomethingMoveInListFragment? = null
 
     //pas sur
     private var db: EtuCoockDataBase? = null
@@ -48,9 +51,9 @@ class IngredientListFragment: Fragment(), IngredientRecyclerAdapter.OnItemClickL
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProviders.of(this).get(IngredientListViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, viewModelFactory { IngredientListViewModel(activity!!.application)}).get(IngredientListViewModel::class.java)
         viewModel.addIngredient(Ingredient(null, "riz", 10F))
-        viewModel.getListIngredients().observe(this, Observer { ingredients -> recyclerViewAdapter.addIngredients(ingredients!!) })
+        viewModel.ingredients.observe(this, Observer {recyclerViewAdapter.addIngredients(it)})
 
         //floating action button
         ingredient_floating_action_button.setOnClickListener {
@@ -82,15 +85,28 @@ class IngredientListFragment: Fragment(), IngredientRecyclerAdapter.OnItemClickL
 
     //pas sur
     private fun deleteAllIngredients() {
-        db!!.ingredientDao().deleteAllIngredients()
+        viewModel.deleteAllIngredients()
     }
 
     override fun onItemClick(ingredient: Ingredient, position: Int) {
-        System.out.println("Ingredient : " + ingredient.ingredientName)
         var uri = Uri.parse(ingredient.toString())
         uri = uri.buildUpon()
             .appendQueryParameter("ingredient_id", ingredient.id.toString())
             .build()
         listener?.onIngredientSelected(uri, position)
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if(context is OnSomethingMoveInListFragment) {
+            listener = context
+        } else {
+            throw RuntimeException(context.toString() + " you must implement OnSomethingMoveInListFragment")
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        listener = null
     }
 }

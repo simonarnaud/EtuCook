@@ -24,6 +24,6 @@ interface IngredientDao {
     fun updateIngredient(ingredient: Ingredient)
 
     @Query("SELECT * FROM ingredient_table where ingredient_id == :id")
-    fun getIngredientById(id: Long): Ingredient
+    fun getIngredientById(id: Long): LiveData<Ingredient>
 
 }

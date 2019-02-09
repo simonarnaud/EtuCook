@@ -4,7 +4,6 @@ import android.net.Uri
 import android.os.Bundle
 import kotlinx.android.synthetic.main.toolbar_md_activity_content.*
 import sa.com.etucook.R
-import sa.com.etucook.database.EtuCoockDataBase
 import sa.com.etucook.fragments.IngredientFragment
 import sa.com.etucook.fragments.IngredientListFragment
 
