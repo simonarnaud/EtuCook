@@ -7,7 +7,7 @@ import sa.com.etucook.R
 import sa.com.etucook.fragments.IngredientFragment
 import sa.com.etucook.fragments.IngredientListFragment
 
-class IngredientListActivity : SimpleFragmentActivity(), IngredientListFragment.OnSomethingMoveInListFragment {
+class IngredientListActivity : SimpleFragmentActivity(), IngredientListFragment.OnSomethingMoveInListFragment, IngredientFragment.OnInteractionListener {
     private var isTwoPane: Boolean = false
 
     override fun createFragment() = IngredientListFragment()
@@ -41,6 +41,16 @@ class IngredientListActivity : SimpleFragmentActivity(), IngredientListFragment.
     private fun removeDisplayedFragment() {
         supportFragmentManager.findFragmentById(R.id.container_fragment_detail)?.let {
             supportFragmentManager.beginTransaction().remove(it).commit()
+        }
+    }
+
+    override fun onIngredientSaved() { }
+
+    override fun onIngredientDeleted() {
+        if(isTwoPane) {
+            removeDisplayedFragment()
+        } else {
+            supportFragmentManager.popBackStack()
         }
     }
 }

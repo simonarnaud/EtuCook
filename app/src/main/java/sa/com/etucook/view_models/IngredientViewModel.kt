@@ -17,4 +17,8 @@ class IngredientViewModel(application: Application, ingredientId: Long?) : Andro
     init {
         ingredient = ingredientRepos.getIngredientById(ingredientId)
     }
+
+    fun deleteIngredient(id: Long?) {
+        ingredientRepos.deleteIngredient(id)
+    }
 }

@@ -1,5 +1,6 @@
 package sa.com.etucook.fragments
 
+import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
@@ -11,6 +12,7 @@ import sa.com.etucook.R
 import sa.com.etucook.database.EtuCoockDataBase
 import sa.com.etucook.view_models.IngredientViewModel
 import sa.com.etucook.view_models.viewModelFactory
+import java.lang.RuntimeException
 
 class IngredientFragment : Fragment() {
 
@@ -24,6 +26,13 @@ class IngredientFragment : Fragment() {
         }
     }
 
+    interface OnInteractionListener {
+        fun onIngredientSaved()
+        fun onIngredientDeleted()
+    }
+
+    private var listener: OnInteractionListener? = null
+
     private var ingredientUri: Uri? = null
     private var ingredientId: Long? = null
 
@@ -34,6 +43,8 @@ class IngredientFragment : Fragment() {
             EXTRA_INGREDIENT_URI)
 
         ingredientId = ingredientUri?.getQueryParameter("ingredient_id")?.toLong()
+
+        setHasOptionsMenu(true)
 
         /*ingredientUri?.let {
             loaderManager.initLoader(0, null, this)
@@ -69,20 +80,20 @@ class IngredientFragment : Fragment() {
         EtuCoockDataBase.destroyInstance()
     }
 
-   /* override fun onPrepareOptionsMenu(menu: Menu) {
+    override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
-        if(ingredientUri == null) {
-            menu?.findItem(R.id.action_delete)?.isVisible = false
+        if(ingredientId == null) {
+            menu.findItem(R.id.action_delete)?.isVisible = false
         }
-    }*/
+    }
 
-   /* override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater?.inflate(R.menu.menu_ingredient, menu)
-    }*/
+        inflater.inflate(R.menu.menu_ingredient, menu)
+    }
 
-    /*override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item?.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
             R.id.action_save -> {
                 saveIngredient()
                 true
@@ -93,5 +104,31 @@ class IngredientFragment : Fragment() {
             }
             else -> super.onOptionsItemSelected(item)
         }
-    }*/
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if(context is IngredientFragment.OnInteractionListener) {
+            listener = context
+        } else {
+            throw RuntimeException(context.toString() + " you must implement OnInteractionListener")
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        listener = null
+    }
+
+    private fun saveIngredient() {
+        //a faire
+    }
+
+    private fun deleteIngredient() {
+        if(ingredientId != null) {
+            viewModel.deleteIngredient(ingredientId)
+            System.out.println("Listener : " + listener?.toString())
+            listener?.onIngredientDeleted()
+        }
+    }
 }

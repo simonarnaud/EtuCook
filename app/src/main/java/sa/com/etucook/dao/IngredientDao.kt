@@ -18,8 +18,8 @@ interface IngredientDao {
     @Query("Delete from ingredient_table")
     fun deleteAllIngredients()
 
-    @Delete
-    fun deleteIngredient(ingredient: Ingredient)
+    @Query("Delete from ingredient_table where ingredient_id == :id")
+    fun deleteIngredient(id: Long?)
 
     @Update
     fun updateIngredient(ingredient: Ingredient)

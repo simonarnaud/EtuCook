@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.ingredient_list_fragment.*
@@ -56,7 +55,7 @@ class PrincipalFragment : Fragment(), IngredientRecyclerAdapter.OnItemClickListe
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_ingredient, menu)
+        inflater.inflate(R.menu.menu_list_ingredient, menu)
     }
 
     override fun onItemClick(ingredient: Ingredient, position: Int) {

@@ -26,8 +26,8 @@ class IngredientRepos(application: Application) {
         mDataBaseThreadWorker.postTask(task)
     }
 
-    fun deleteIngredient(ingredient: Ingredient) {
-        val task = Runnable { mEtuCoockDataBase.ingredientDao().deleteIngredient(ingredient) }
+    fun deleteIngredient(id: Long?) {
+        val task = Runnable { mEtuCoockDataBase.ingredientDao().deleteIngredient(id) }
         mDataBaseThreadWorker.postTask(task)
     }
 

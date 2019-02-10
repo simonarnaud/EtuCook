@@ -26,9 +26,6 @@ class IngredientListFragment: Fragment(), IngredientRecyclerAdapter.OnItemClickL
     }
     private var listener: OnSomethingMoveInListFragment? = null
 
-    //pas sur
-    private var db: EtuCoockDataBase? = null
-
     private var ingredientRecyclerView: RecyclerView? = null
     private var recyclerViewAdapter = IngredientRecyclerAdapter(arrayListOf(), this)
 
@@ -38,8 +35,6 @@ class IngredientListFragment: Fragment(), IngredientRecyclerAdapter.OnItemClickL
    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        db = EtuCoockDataBase.getInstance()
-
         val rootView = inflater.inflate(R.layout.ingredient_list_fragment, container, false)
         ingredientRecyclerView = rootView.findViewById(R.id.ingredient_recycler_view) as RecyclerView
         ingredientRecyclerView!!.layoutManager = LinearLayoutManager(activity)
@@ -53,10 +48,9 @@ class IngredientListFragment: Fragment(), IngredientRecyclerAdapter.OnItemClickL
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = ViewModelProviders.of(this, viewModelFactory { IngredientListViewModel(activity!!.application)}).get(IngredientListViewModel::class.java)
-        //viewModel.addIngredient(Ingredient(null, "riz", 10F))
+        viewModel.addIngredient(Ingredient(null, "riz", 10F))
         viewModel.ingredients.observe(this, Observer {recyclerViewAdapter.addIngredients(it)})
 
-        //floating action button
         ingredient_floating_action_button.setOnClickListener {
             startActivity(IngredientActivity.getIntent(activity!!.application, null))
         }
@@ -69,7 +63,7 @@ class IngredientListFragment: Fragment(), IngredientRecyclerAdapter.OnItemClickL
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.menu_ingredient, menu)
+        inflater.inflate(R.menu.menu_list_ingredient, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -82,7 +76,6 @@ class IngredientListFragment: Fragment(), IngredientRecyclerAdapter.OnItemClickL
         }
     }
 
-    //pas sur
     private fun deleteAllIngredients() {
         viewModel.deleteAllIngredients()
     }

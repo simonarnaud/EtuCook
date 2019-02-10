@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">EtuCook</string>
     <string name="add_ingredient">Add an ingredient</string>
+    <string name="save">Save</string>
+    <string name="delete">Delete</string>
+    <string name="delete_all_ingredients">Delete All Ingredients</string>
 </resources>
