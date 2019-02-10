@@ -24,7 +24,6 @@ class IngredientFragment : Fragment() {
         }
     }
 
-
     private var ingredientUri: Uri? = null
     private var ingredientId: Long? = null
 
@@ -55,9 +54,14 @@ class IngredientFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-         viewModel = ViewModelProviders.of(this, viewModelFactory { IngredientViewModel(activity!!.application,ingredientId!!)}).get(IngredientViewModel::class.java)
-         viewModel.ingredient.observe(this, Observer { /*attention !*/ ingredient_name.setText(it.ingredientName)
-                                                              ingredient_cost.setText(it.id.toString())})
+         viewModel = ViewModelProviders.of(this, viewModelFactory { IngredientViewModel(activity!!.application,ingredientId)}).get(IngredientViewModel::class.java)
+
+        viewModel.ingredient.observe(this, Observer {
+            if(it != null) {
+                ingredient_name.setText(it.ingredientName)
+                ingredient_cost.setText(it.id.toString())
+            }
+        })
     }
 
     override fun onDestroyView() {

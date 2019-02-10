@@ -1,6 +1,7 @@
 package sa.com.etucook.dao
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.room.*
 import androidx.room.OnConflictStrategy.REPLACE
 import sa.com.etucook.model.Ingredient
@@ -24,6 +25,6 @@ interface IngredientDao {
     fun updateIngredient(ingredient: Ingredient)
 
     @Query("SELECT * FROM ingredient_table where ingredient_id == :id")
-    fun getIngredientById(id: Long): LiveData<Ingredient>
+    fun getIngredientById(id: Long?): LiveData<Ingredient>
 
 }

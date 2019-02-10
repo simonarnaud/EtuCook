@@ -29,12 +29,13 @@ class IngredientListActivity : SimpleFragmentActivity(), IngredientListFragment.
                 .replace(R.id.container_fragment_detail, IngredientFragment.newInstance(ingredientUri))
                 .commit()
         } else {
-            println("pas de selection")
-            //startActivity(IngredientPagerActivity.getIntent(this, position))
+            supportFragmentManager.beginTransaction()
+                .addToBackStack("ingredient_back")
+                .replace(R.id.container_fragment, IngredientFragment.newInstance(ingredientUri), "ingredient_back")
+                .commit()
         }
     }
 
-   // override fun onNewIngredient() = startActivity(IngredientActivity.getIntent(this, null))
    // override fun onIngredientSave() {}
 
     private fun removeDisplayedFragment() {

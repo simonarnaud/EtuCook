@@ -19,6 +19,7 @@
         </activity>
         <activity android:name=".activities.Principal"/>
         <activity android:name=".activities.IngredientActivity"/>
+        <activity android:name=".activities.IngredientPagerActivity"/>
     </application>
 
 </manifest>

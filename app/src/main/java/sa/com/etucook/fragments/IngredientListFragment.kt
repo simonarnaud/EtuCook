@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.ingredient_list_fragment.*
 import sa.com.etucook.R
+import sa.com.etucook.activities.IngredientActivity
 import sa.com.etucook.database.EtuCoockDataBase
 import sa.com.etucook.model.Ingredient
 import sa.com.etucook.recycler_adapter.IngredientRecyclerAdapter
@@ -52,14 +53,12 @@ class IngredientListFragment: Fragment(), IngredientRecyclerAdapter.OnItemClickL
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = ViewModelProviders.of(this, viewModelFactory { IngredientListViewModel(activity!!.application)}).get(IngredientListViewModel::class.java)
-        viewModel.addIngredient(Ingredient(null, "riz", 10F))
+        //viewModel.addIngredient(Ingredient(null, "riz", 10F))
         viewModel.ingredients.observe(this, Observer {recyclerViewAdapter.addIngredients(it)})
 
         //floating action button
         ingredient_floating_action_button.setOnClickListener {
-
-            //var intent = Intent(applicationContext, ContactDetailsActivity::class.java)
-            //startActivity(intent)
+            startActivity(IngredientActivity.getIntent(activity!!.application, null))
         }
     }
 

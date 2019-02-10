@@ -2,6 +2,7 @@ package sa.com.etucook.repository
 
 import android.app.Application
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import sa.com.etucook.database.EtuCoockDataBase
 import sa.com.etucook.model.Ingredient
 import sa.com.etucook.threadWorker.DataBaseThreadWorker
@@ -44,7 +45,7 @@ class IngredientRepos(application: Application) {
         return ingredients
     }
 
-    fun getIngredientById(id: Long): LiveData<Ingredient>/*Ingredient?*/ {
+    fun getIngredientById(id: Long?): LiveData<Ingredient>/*Ingredient?*/ {
         //return ingredients.value?.filter { it.id == id }?.get(0)
         return mEtuCoockDataBase.ingredientDao().getIngredientById(id)
     }
