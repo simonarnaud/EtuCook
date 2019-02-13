@@ -30,5 +30,4 @@ abstract class SimpleFragmentActivity: AppCompatActivity() {
     protected abstract fun createFragment(): Fragment
     @LayoutRes
     protected abstract fun getLayoutResId(): Int
-
 }
