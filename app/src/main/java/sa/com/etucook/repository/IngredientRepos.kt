@@ -23,7 +23,7 @@ class IngredientRepos(private val ingredientDao: IngredientDao) {
         EXECUTOR_INGREDIENT.execute { ingredientDao.updateIngredient(ingredient) }
     }
 
-    fun getAllIngredients() =  ingredientDao.getAllIngredients()
+    fun getAllIngredients() = ingredientDao.getAllIngredients()
 
     fun getIngredientById(id: Long?) = ingredientDao.getIngredientById(id)
 }

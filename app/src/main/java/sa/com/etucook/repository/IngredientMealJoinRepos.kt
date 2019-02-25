@@ -10,6 +10,6 @@ val EXECUTOR_MEAL_JOIN_INGREDIENT: ExecutorService = Executors.newSingleThreadEx
 class IngredientMealJoinRepos(private val ingredientMealJoinDao: IngredientMealJoinDao) {
 
     fun insertIngtredientMealJoin(ingredientMealJoin: IngredientMealJoin) = EXECUTOR_MEAL_JOIN_INGREDIENT.execute { ingredientMealJoinDao.insert(ingredientMealJoin) }
-    fun getMealsFromIngredient(ingredientId: Long) = EXECUTOR_MEAL_JOIN_INGREDIENT.execute { ingredientMealJoinDao.getMealsFromIngredient(ingredientId) }
-    fun getIngredientsFromMeal(mealId: Long) { ingredientMealJoinDao.getIngredientsFromMeal(mealId)}
+    fun getMealsFromIngredient(ingredientId: Long) = ingredientMealJoinDao.getMealsFromIngredient(ingredientId)
+    fun getIngredientsFromMeal(mealId: Long) = ingredientMealJoinDao.getIngredientsFromMeal(mealId)
 }

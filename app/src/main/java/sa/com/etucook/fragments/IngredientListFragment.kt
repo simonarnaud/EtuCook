@@ -49,7 +49,6 @@ class IngredientListFragment: Fragment(), IngredientRecyclerAdapter.OnItemClickL
 
         ingredient_floating_action_button.setOnClickListener {
             addNewIngredient()
-            //startActivity(IngredientActivity.getIntent(activity!!.application, null))
         }
     }
 

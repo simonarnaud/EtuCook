@@ -21,7 +21,7 @@ interface MealDao {
     @Delete
     fun deleteMeal(meal: Meal)
 
-    @Update
+    @Update(onConflict = REPLACE)
     fun updateMeal(meal: Meal)
 
     @Query("SELECT * FROM meal_table where meal_id == :id")

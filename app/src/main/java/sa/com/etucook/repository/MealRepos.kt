@@ -1,44 +1,18 @@
 package sa.com.etucook.repository
 
-import sa.com.etucook.database.EtuCoockDataBase
+import sa.com.etucook.dao.MealDao
 import sa.com.etucook.model.Meal
-import sa.com.etucook.threadWorker.DataBaseThreadWorker
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
-class MealRepos {
+val EXECUTOR_MEAL: ExecutorService = Executors.newSingleThreadExecutor()
 
-    companion object {
+class MealRepos(private val mealDao: MealDao) {
 
-        private var mEtuCoockDataBase: EtuCoockDataBase? = null
-        private lateinit var mDataBaseThreadWorker: DataBaseThreadWorker
-
-        fun insertMealInDataBase(meal: Meal) {
-            val task = Runnable { mEtuCoockDataBase?.mealDao()?.insert(meal) }
-            mDataBaseThreadWorker.postTask(task)
-        }
-
-        fun getAllMeals() {
-            val task = Runnable { mEtuCoockDataBase?.mealDao()?.getAllMeals() }
-            mDataBaseThreadWorker.postTask(task)
-        }
-
-        fun deleteAllMeals() {
-            val task = Runnable { mEtuCoockDataBase?.mealDao()?.deleteAllMeals() }
-            mDataBaseThreadWorker.postTask(task)
-        }
-
-        fun deleteMeal(meal: Meal) {
-            val task = Runnable { mEtuCoockDataBase?.mealDao()?.deleteMeal(meal) }
-            mDataBaseThreadWorker.postTask(task)
-        }
-
-        fun updateMeal(meal: Meal) {
-            val task = Runnable { mEtuCoockDataBase?.mealDao()?.updateMeal(meal) }
-            mDataBaseThreadWorker.postTask(task)
-        }
-
-        fun getMealById(id: Long) {
-            val task = Runnable { MealRepos.mEtuCoockDataBase?.mealDao()?.getMealById(id) }
-            MealRepos.mDataBaseThreadWorker.postTask(task)
-        }
-    }
+        fun insertMealInDataBase(meal: Meal) = EXECUTOR_MEAL.execute{ mealDao.insert(meal) }
+        fun getAllMeals() = mealDao.getAllMeals()
+        fun deleteAllMeals() = EXECUTOR_MEAL.execute { mealDao.deleteAllMeals() }
+        fun deleteMeal(meal: Meal) = EXECUTOR_MEAL.execute { mealDao.deleteMeal(meal) }
+        fun updateMeal(meal: Meal) = EXECUTOR_MEAL.execute { mealDao.updateMeal(meal) }
+        fun getMealById(id: Long) = mealDao.getMealById(id)
 }

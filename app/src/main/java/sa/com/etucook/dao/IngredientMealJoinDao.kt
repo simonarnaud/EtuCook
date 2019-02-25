@@ -1,5 +1,6 @@
 package sa.com.etucook.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -17,10 +18,10 @@ interface IngredientMealJoinDao {
     @Query("SELECT * from meal_table inner join ingredient_meal " +
             "on meal_id = mealId " +
             "where ingredientId = :ingredientId")
-    fun getMealsFromIngredient(ingredientId: Long): List<Meal>
+    fun getMealsFromIngredient(ingredientId: Long): LiveData<List<Meal>>
 
     @Query("SELECT * from ingredient_table inner join ingredient_meal " +
             "on ingredient_id = ingredientId " +
             "where mealId = :mealId")
-    fun getIngredientsFromMeal(mealId: Long): List<Ingredient>
+    fun getIngredientsFromMeal(mealId: Long): LiveData<List<Ingredient>>
 }
