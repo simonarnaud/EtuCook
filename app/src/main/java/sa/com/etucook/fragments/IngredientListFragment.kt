@@ -10,6 +10,8 @@ import kotlinx.android.synthetic.main.ingredient_list_fragment.*
 import sa.com.etucook.R
 import sa.com.etucook.databinding.IngredientListFragmentBinding
 import sa.com.etucook.recycler_adapter.IngredientRecyclerAdapter
+import sa.com.etucook.retrofit.RetrofitFactory
+import sa.com.etucook.retrofit.RetrofitService
 import sa.com.etucook.view_models.IngredientListViewModel
 import java.lang.RuntimeException
 
@@ -61,6 +63,11 @@ class IngredientListFragment: Fragment(), IngredientRecyclerAdapter.OnItemClickL
         return when (item.itemId) {
             R.id.delete_all_ingredient -> {
                 deleteAllIngredients()
+                true
+            }
+            R.id.get_marketplace -> {
+               // RetrofitFactory.getMarkets(49.151676F, -0.423753F,49.194477F, -0.344102F)
+                RetrofitFactory.getMarkets()
                 true
             }
             else -> super.onOptionsItemSelected(item)

@@ -10,7 +10,4 @@ object Converter {
 
     @JvmStatic
     fun stringToFloat(value: String) = if (value.isBlank()) 0F else value.toFloat()
-
-    @JvmStatic
-    fun addEuros(value: String) = "$value €"
 }

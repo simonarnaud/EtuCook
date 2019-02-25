@@ -11,4 +11,6 @@
     <string name="ingredient_cost">Ingredient Cost :</string>
     <string name="cost">Cost</string>
     <string name="name">Name</string>
+    <string name="euros">€</string>
+    <string name="get_market_place">Get Market Place</string>
 </resources>

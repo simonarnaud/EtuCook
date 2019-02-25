@@ -25,27 +25,40 @@
               android:layout_height="wrap_content"
               android:layout_marginLeft="8dp"
               android:layout_marginStart="8dp"
+              android:layout_marginRight="8dp"
+              android:layout_marginEnd="8dp"
+              android:layout_toLeftOf="@+id/cost_ingredient"
               android:id="@+id/name_ingredient"
               android:textColor="@color/colorPrimaryDark"
               android:layout_toRightOf="@+id/ingredient_image"
               android:layout_toEndOf="@+id/ingredient_image"
-              android:layout_toLeftOf="@+id/cost_ingredient"
-              android:layout_toStartOf="@+id/cost_ingredient"
               tools:text="Ingredient Name"
               android:textSize="20sp"
-              android:text="@{ingredient.ingredientName}"/>
+              android:text="@{ingredient.ingredientName}"
+              android:layout_toStartOf="@+id/cost_ingredient"/>
 
     <TextView android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:textColor="@color/colorPrimaryDark"
               android:id="@+id/cost_ingredient"
-              android:layout_marginRight="8dp"
-              android:layout_marginEnd="8dp"
-              android:layout_alignParentRight="true"
-              android:layout_alignParentEnd="true"
               tools:text="Ingredient Cost"
               android:textSize="20sp"
-              android:text="@{Converter.Converter.addEuros(Converter.floatToString(ingredient.ingredientCost))}"/>
+              android:layout_toLeftOf="@+id/euros"
+              android:layout_marginRight="8dp"
+              android:text="@{Converter.floatToString(ingredient.ingredientCost)}"
+              android:layout_toStartOf="@+id/euros"
+              android:layout_marginEnd="8dp"/>
+
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textColor="@color/colorPrimaryDark"
+              android:text="@string/euros"
+              android:id="@+id/euros"
+              android:textSize="20sp"
+              android:layout_alignParentRight="true"
+              android:layout_alignParentEnd="true"
+              android:layout_marginRight="8dp"
+              android:layout_marginEnd="8dp"/>
 
 </RelativeLayout>
 

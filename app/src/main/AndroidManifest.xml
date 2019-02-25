@@ -3,6 +3,8 @@
           xmlns:tools="http://schemas.android.com/tools"
           package="sa.com.etucook">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
             android:name=".app_manager.EtuCookApplication"
             android:allowBackup="true"

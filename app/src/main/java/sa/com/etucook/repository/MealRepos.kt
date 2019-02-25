@@ -8,7 +8,6 @@ import java.util.concurrent.Executors
 val EXECUTOR_MEAL: ExecutorService = Executors.newSingleThreadExecutor()
 
 class MealRepos(private val mealDao: MealDao) {
-
         fun insertMealInDataBase(meal: Meal) = EXECUTOR_MEAL.execute{ mealDao.insert(meal) }
         fun getAllMeals() = mealDao.getAllMeals()
         fun deleteAllMeals() = EXECUTOR_MEAL.execute { mealDao.deleteAllMeals() }
