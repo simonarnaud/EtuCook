@@ -1,24 +1,22 @@
 package sa.com.etucook.view_models
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import sa.com.etucook.database.EtuCoockDataBase
+import androidx.lifecycle.ViewModel
 import sa.com.etucook.model.Ingredient
 import sa.com.etucook.repository.IngredientRepos
-import sa.com.etucook.threadWorker.DataBaseThreadWorker
 
-class IngredientViewModel(application: Application, ingredientId: Long?) : AndroidViewModel(application) {
+class IngredientViewModel(private val ingredientRepos: IngredientRepos, ingredientId: Long) : ViewModel() {
+    val ingredient = if (ingredientId == 0L) MutableLiveData<Ingredient>().apply { value = Ingredient() }
+    else ingredientRepos.getIngredientById(ingredientId)
 
-    private val ingredientRepos = IngredientRepos(application)
-    var ingredient: LiveData<Ingredient>
-
-    init {
-        ingredient = ingredientRepos.getIngredientById(ingredientId)
+    fun saveIngredient() = ingredient.value?.let {
+        if(it.ingredientName.isBlank() || it.ingredientCost.isNaN()) {
+            false
+        } else {
+            if(it.id == 0L) ingredientRepos.insertIngredient(it) else ingredientRepos.updateIngredient(it)
+            true
+        }
     }
 
-    fun deleteIngredient(id: Long?) {
-        ingredientRepos.deleteIngredient(id)
-    }
+    fun deleteIngredient() = ingredient.value?.let { ingredientRepos.deleteIngredient(it.id) }
 }

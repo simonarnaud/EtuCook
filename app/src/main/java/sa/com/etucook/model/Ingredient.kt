@@ -10,7 +10,7 @@ data class Ingredient (
 
     @ColumnInfo(name = "ingredient_id")
     @PrimaryKey(autoGenerate = true)
-    var id : Long?,
+    val id : Long = 0L,
 
     @ColumnInfo(name = "ingredient_name")
     var ingredientName : String,
@@ -18,5 +18,5 @@ data class Ingredient (
     @ColumnInfo(name = "ingredient_cost")
     var ingredientCost : Float
 ){
-   @Ignore constructor():this(null,"", 0F)
+   @Ignore constructor():this(0L,"", 0F)
 }

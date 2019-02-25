@@ -1,52 +1,23 @@
 package sa.com.etucook.repository
 
-import android.app.Application
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import sa.com.etucook.database.EtuCoockDataBase
+import sa.com.etucook.dao.IngredientDao
 import sa.com.etucook.model.Ingredient
-import sa.com.etucook.threadWorker.DataBaseThreadWorker
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
-class IngredientRepos(application: Application) {
+val EXECUTOR: ExecutorService = Executors.newSingleThreadExecutor()
 
-    private var mEtuCoockDataBase: EtuCoockDataBase
-    private var mDataBaseThreadWorker = DataBaseThreadWorker("Thread worker")
+class IngredientRepos(private val ingredientDao: IngredientDao) {
 
-    var ingredients: LiveData<List<Ingredient>>
+    fun insertIngredient(ingredient: Ingredient) = EXECUTOR.execute { ingredientDao.insert(ingredient) }
 
-    init {
-        EtuCoockDataBase.setApplication(application)
-        mEtuCoockDataBase = EtuCoockDataBase.getInstance()
-        ingredients = mEtuCoockDataBase.ingredientDao().getAllIngredients()
-        mDataBaseThreadWorker.start()
-    }
+    fun deleteIngredient(id: Long?) = EXECUTOR.execute { ingredientDao.deleteIngredient(id) }
 
-    fun insertIngredient(ingredient: Ingredient) {
-        val task = Runnable { mEtuCoockDataBase.ingredientDao().insert(ingredient) }
-        mDataBaseThreadWorker.postTask(task)
-    }
+    fun deleteAllIngredients() = EXECUTOR.execute { ingredientDao.deleteAllIngredients() }
 
-    fun deleteIngredient(id: Long?) {
-        val task = Runnable { mEtuCoockDataBase.ingredientDao().deleteIngredient(id) }
-        mDataBaseThreadWorker.postTask(task)
-    }
+    fun updateIngredient(ingredient: Ingredient) = EXECUTOR.execute { ingredientDao.updateIngredient(ingredient) }
 
-    fun deleteAllIngredients() {
-        val task = Runnable { mEtuCoockDataBase.ingredientDao().deleteAllIngredients() }
-        mDataBaseThreadWorker.postTask(task)
-    }
+    fun getAllIngredients() =  ingredientDao.getAllIngredients()
 
-    fun updateIngredient(ingredient: Ingredient) {
-        val task = Runnable { mEtuCoockDataBase.ingredientDao().updateIngredient(ingredient) }
-        mDataBaseThreadWorker.postTask(task)
-    }
-
-    fun getAllIngredients(): LiveData<List<Ingredient>> {
-        return ingredients
-    }
-
-    fun getIngredientById(id: Long?): LiveData<Ingredient>/*Ingredient?*/ {
-        //return ingredients.value?.filter { it.id == id }?.get(0)
-        return mEtuCoockDataBase.ingredientDao().getIngredientById(id)
-    }
+    fun getIngredientById(id: Long?) = ingredientDao.getIngredientById(id)
 }

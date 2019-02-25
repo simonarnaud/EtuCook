@@ -1,64 +1,55 @@
 package sa.com.etucook.fragments
 
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.ingredient_list_fragment.*
-import sa.com.etucook.R
-import sa.com.etucook.activities.IngredientActivity
-import sa.com.etucook.database.EtuCoockDataBase
-import sa.com.etucook.model.Ingredient
+import sa.com.etucook.databinding.IngredientListFragmentBinding
 import sa.com.etucook.recycler_adapter.IngredientRecyclerAdapter
 import sa.com.etucook.view_models.IngredientListViewModel
-import sa.com.etucook.view_models.viewModelFactory
 import java.lang.RuntimeException
 
 class IngredientListFragment: Fragment(), IngredientRecyclerAdapter.OnItemClickListener {
 
     interface OnSomethingMoveInListFragment {
-        fun onIngredientSelected(ingredientUri: Uri, position: Int)
+        fun onIngredientSelected(ingredientId: Long)
+        fun onAddNewIngredient()
     }
     private var listener: OnSomethingMoveInListFragment? = null
 
-    private var ingredientRecyclerView: RecyclerView? = null
-    private var recyclerViewAdapter = IngredientRecyclerAdapter(arrayListOf(), this)
+    private var ingredientViewAdapter = IngredientRecyclerAdapter(this)
+    private lateinit var ingredientListVM: IngredientListViewModel
 
    override fun onCreate(savedInstanceState: Bundle?) {
        super.onCreate(savedInstanceState)
+
+       ingredientListVM = ViewModelProviders.of(this).get(IngredientListViewModel::class.java)
+       ingredientListVM.ingredients.observe(this, Observer {
+           ingredientViewAdapter.submitList(it)
+       })
+
        setHasOptionsMenu(true)
    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val rootView = inflater.inflate(R.layout.ingredient_list_fragment, container, false)
-        ingredientRecyclerView = rootView.findViewById(R.id.ingredient_recycler_view) as RecyclerView
-        ingredientRecyclerView!!.layoutManager = LinearLayoutManager(activity)
-        ingredientRecyclerView!!.adapter = recyclerViewAdapter
-        return rootView
+        val binding = IngredientListFragmentBinding.inflate(inflater)
+        binding.ingredientListVM = ingredientListVM
+        //binding.lifecycleOwner = this
+        return binding.root
     }
-
-    private lateinit var viewModel: IngredientListViewModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProviders.of(this, viewModelFactory { IngredientListViewModel(activity!!.application)}).get(IngredientListViewModel::class.java)
-        viewModel.addIngredient(Ingredient(null, "riz", 10F))
-        viewModel.ingredients.observe(this, Observer {recyclerViewAdapter.addIngredients(it)})
+        ingredient_recycler_view.adapter = ingredientViewAdapter
 
         ingredient_floating_action_button.setOnClickListener {
-            startActivity(IngredientActivity.getIntent(activity!!.application, null))
+            addNewIngredient()
+            //startActivity(IngredientActivity.getIntent(activity!!.application, null))
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        EtuCoockDataBase.destroyInstance()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -77,15 +68,15 @@ class IngredientListFragment: Fragment(), IngredientRecyclerAdapter.OnItemClickL
     }
 
     private fun deleteAllIngredients() {
-        viewModel.deleteAllIngredients()
+        ingredientListVM.deleteAllIngredients()
     }
 
-    override fun onItemClick(ingredient: Ingredient, position: Int) {
-        var uri = Uri.parse(ingredient.toString())
-        uri = uri.buildUpon()
-            .appendQueryParameter("ingredient_id", ingredient.id.toString())
-            .build()
-        listener?.onIngredientSelected(uri, position)
+    fun addNewIngredient() {
+        listener?.onAddNewIngredient()
+    }
+
+    override fun onItemClick(ingredientId: Long) {
+        listener?.onIngredientSelected(ingredientId)
     }
 
     override fun onAttach(context: Context) {
@@ -93,7 +84,7 @@ class IngredientListFragment: Fragment(), IngredientRecyclerAdapter.OnItemClickL
         if(context is OnSomethingMoveInListFragment) {
             listener = context
         } else {
-            throw RuntimeException(context.toString() + " you must implement OnSomethingMoveInListFragment")
+            throw RuntimeException(context.toString() + " You must implement OnSomethingMoveInListFragment")
         }
     }
 

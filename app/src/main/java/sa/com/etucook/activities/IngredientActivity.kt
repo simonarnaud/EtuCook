@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import sa.com.etucook.R
 import sa.com.etucook.fragments.IngredientFragment
 
 class IngredientActivity: SimpleFragmentActivity(), IngredientFragment.OnInteractionListener {
@@ -21,8 +20,8 @@ class IngredientActivity: SimpleFragmentActivity(), IngredientFragment.OnInterac
         ingredientUri = intent.data
     }
 
-    override fun createFragment() = IngredientFragment.newInstance(ingredientUri)
-    override fun getLayoutResId() = R.layout.ingredient_activity
+  //  override fun createFragment() = IngredientFragment.newInstance(ingredientUri)
+  //  override fun getLayoutResId() = R.layout.ingredient_activity
 
     override fun onIngredientSaved() = finish()
     override fun onIngredientDeleted() = finish()

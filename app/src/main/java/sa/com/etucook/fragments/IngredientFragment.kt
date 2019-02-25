@@ -1,30 +1,27 @@
 package sa.com.etucook.fragments
 
+import android.app.AlertDialog
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import kotlinx.android.synthetic.main.ingredient_fragment.*
-import sa.com.etucook.R
+import androidx.navigation.fragment.navArgs
 import sa.com.etucook.database.EtuCoockDataBase
+import sa.com.etucook.databinding.IngredientFragmentBinding
+import sa.com.etucook.repository.IngredientRepos
 import sa.com.etucook.view_models.IngredientViewModel
 import sa.com.etucook.view_models.viewModelFactory
 import java.lang.RuntimeException
 
+private const val INGREDIENT_ID = "sa.com.etucook.ingredient_id"
+
 class IngredientFragment : Fragment() {
 
-    companion object {
-        private const val EXTRA_INGREDIENT_URI = "sa.com.etucook.ingredient_uri"
+    private lateinit var ingredientVM: IngredientViewModel
+    private var ingredientId: Long = 0L
 
-        fun newInstance(ingredientUri: Uri?): IngredientFragment = IngredientFragment().apply {
-            arguments = Bundle().apply {
-                putParcelable(EXTRA_INGREDIENT_URI, ingredientUri)
-            }
-        }
-    }
+    val args: IngredientFragmentArgs by navArgs()
 
     interface OnInteractionListener {
         fun onIngredientSaved()
@@ -33,56 +30,34 @@ class IngredientFragment : Fragment() {
 
     private var listener: OnInteractionListener? = null
 
-    private var ingredientUri: Uri? = null
-    private var ingredientId: Long? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        ingredientUri = savedInstanceState?.getParcelable(EXTRA_INGREDIENT_URI)?: arguments?.getParcelable(
-            EXTRA_INGREDIENT_URI)
+        ingredientId = savedInstanceState?.getLong(INGREDIENT_ID) ?: args.ingredientId
 
-        ingredientId = ingredientUri?.getQueryParameter("ingredient_id")?.toLong()
+        if(ingredientId == 0L) activity?.setTitle(getString(sa.com.etucook.R.string.create_new_ingredient))
+
+        ingredientVM = ViewModelProviders.of(this, viewModelFactory { IngredientViewModel(IngredientRepos(EtuCoockDataBase.getInstance().ingredientDao()), ingredientId) })
+            .get(IngredientViewModel::class.java)
 
         setHasOptionsMenu(true)
-
-        /*ingredientUri?.let {
-            loaderManager.initLoader(0, null, this)
-        }?: activity?.setTitle(getString(R.string.add_ingredient))*/
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putParcelable(EXTRA_INGREDIENT_URI, ingredientUri)
+        outState.putLong(INGREDIENT_ID, ingredientId)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.ingredient_fragment, container, false)
-    }
-
-    private lateinit var viewModel: IngredientViewModel
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-         viewModel = ViewModelProviders.of(this, viewModelFactory { IngredientViewModel(activity!!.application,ingredientId)}).get(IngredientViewModel::class.java)
-
-        viewModel.ingredient.observe(this, Observer {
-            if(it != null) {
-                ingredient_name.setText(it.ingredientName)
-                ingredient_cost.setText(it.id.toString())
-            }
-        })
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        EtuCoockDataBase.destroyInstance()
+        val binding = IngredientFragmentBinding.inflate(inflater)
+        binding.ingredientVM = ingredientVM
+        //binding.lifecycleOwner = this
+        return binding.root
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
-        if(ingredientId == null) {
+        if(ingredientId == 0L) {
             menu.findItem(R.id.action_delete)?.isVisible = false
         }
     }
@@ -111,7 +86,7 @@ class IngredientFragment : Fragment() {
         if(context is IngredientFragment.OnInteractionListener) {
             listener = context
         } else {
-            throw RuntimeException(context.toString() + " you must implement OnInteractionListener")
+            throw RuntimeException(context.toString() + " You must implement OnInteractionListener")
         }
     }
 
@@ -121,14 +96,19 @@ class IngredientFragment : Fragment() {
     }
 
     private fun saveIngredient() {
-        //a faire
+        if(ingredientVM.saveIngredient() == false) {
+            AlertDialog.Builder(activity).setTitle(getString(sa.com.etucook.R.string.error_occured))
+                .setMessage(getString(sa.com.etucook.R.string.ingredient_error_create))
+                .setNeutralButton(android.R.string.ok, null)
+                .show()
+            return
+        }
+
+        listener?.onIngredientSaved()
     }
 
     private fun deleteIngredient() {
-        if(ingredientId != null) {
-            viewModel.deleteIngredient(ingredientId)
-            System.out.println("Listener : " + listener?.toString())
-            listener?.onIngredientDeleted()
-        }
+       ingredientVM.deleteIngredient()
+        listener?.onIngredientDeleted()
     }
 }

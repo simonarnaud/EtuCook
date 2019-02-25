@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable name="ingredientVM" type="sa.com.etucook.view_models.IngredientViewModel"/>
+        <import type="sa.com.etucook.utilities.Converter"/>
+    </data>
+
+<RelativeLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -8,13 +17,16 @@
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginLeft="8dp"
-                android:layout_marginStart="8dp">
+                android:layout_marginStart="8dp"
+                tools:context="sa.com.etucook.fragments.IngredientFragment">
 
     <TextView android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:id="@+id/ingredient_name"
               android:layout_marginLeft="8dp"
               android:layout_marginStart="8dp"
+              tools:text="Ingredient Name"
+              android:text="@{ingredientVM.ingredient.ingredientName}"
     />
 
     <TextView android:layout_width="wrap_content"
@@ -24,6 +36,9 @@
               android:layout_marginStart="8dp"
               android:layout_marginTop="8dp"
               android:layout_below="@+id/ingredient_name"
+              tools:text="Ingredient Cost"
+              android:text="@{Converter.floatToString(ingredientVM.ingredient.ingredientCost)}"
     />
 
 </RelativeLayout>
+</layout>
