@@ -10,7 +10,7 @@ data class Meal (
 
     @ColumnInfo(name = "meal_id")
     @PrimaryKey(autoGenerate = true)
-    var id : Long?,
+    var id : Long = 0L,
 
     @ColumnInfo(name = "meal_name")
     var mealName : String,
@@ -18,5 +18,5 @@ data class Meal (
     @ColumnInfo(name = "meal_cost")
     var mealCost : Float
 ) {
-    @Ignore constructor():this(null,"",0F)
+    @Ignore constructor():this(0L,"",0F)
 }

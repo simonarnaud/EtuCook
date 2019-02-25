@@ -10,6 +10,7 @@ import sa.com.etucook.model.Meal
 
 @Dao
 interface IngredientMealJoinDao {
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(ingredientMealJoin: IngredientMealJoin)
 

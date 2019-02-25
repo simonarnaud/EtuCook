@@ -1,29 +1,15 @@
 package sa.com.etucook.repository
 
-import sa.com.etucook.database.EtuCoockDataBase
+import sa.com.etucook.dao.IngredientMealJoinDao
 import sa.com.etucook.model.IngredientMealJoin
-import sa.com.etucook.threadWorker.DataBaseThreadWorker
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
-class IngredientMealJoinRepos {
+val EXECUTOR_MEAL_JOIN_INGREDIENT: ExecutorService = Executors.newSingleThreadExecutor()
 
-    companion object {
+class IngredientMealJoinRepos(private val ingredientMealJoinDao: IngredientMealJoinDao) {
 
-        private var mIngredientMealJoinDataBase: EtuCoockDataBase? = null
-        private lateinit var mDataBaseThreadWorker: DataBaseThreadWorker
-
-        fun insertIngtredientMealJoin(ingredientMealJoin: IngredientMealJoin) {
-            val task = Runnable { IngredientMealJoinRepos.mIngredientMealJoinDataBase?.ingredientMealJoinDao()?.insert(ingredientMealJoin) }
-            IngredientMealJoinRepos.mDataBaseThreadWorker.postTask(task)
-        }
-
-        fun getMealsFromIngredient(ingredientId: Long) {
-            val task = Runnable { IngredientMealJoinRepos.mIngredientMealJoinDataBase?.ingredientMealJoinDao()?.getMealsFromIngredient(ingredientId)}
-            IngredientMealJoinRepos.mDataBaseThreadWorker.postTask(task)
-        }
-
-        fun getIngredientsFromMeal(mealId: Long) {
-            val task = Runnable { IngredientMealJoinRepos.mIngredientMealJoinDataBase?.ingredientMealJoinDao()?.getIngredientsFromMeal(mealId)}
-            IngredientMealJoinRepos.mDataBaseThreadWorker.postTask(task)
-        }
-    }
+    fun insertIngtredientMealJoin(ingredientMealJoin: IngredientMealJoin) = EXECUTOR_MEAL_JOIN_INGREDIENT.execute { ingredientMealJoinDao.insert(ingredientMealJoin) }
+    fun getMealsFromIngredient(ingredientId: Long) = EXECUTOR_MEAL_JOIN_INGREDIENT.execute { ingredientMealJoinDao.getMealsFromIngredient(ingredientId) }
+    fun getIngredientsFromMeal(mealId: Long) { ingredientMealJoinDao.getIngredientsFromMeal(mealId)}
 }
