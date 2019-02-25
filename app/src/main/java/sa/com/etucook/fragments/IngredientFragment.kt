@@ -4,8 +4,12 @@ import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import android.view.*
+import android.view.inputmethod.InputMethodManager
+import androidx.activity.OnBackPressedCallback
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.Navigator
 import androidx.navigation.fragment.navArgs
 import sa.com.etucook.R
 import sa.com.etucook.database.EtuCoockDataBase
@@ -52,7 +56,7 @@ class IngredientFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = IngredientFragmentBinding.inflate(inflater)
         binding.ingredientVM = ingredientVM
-        //binding.lifecycleOwner = this
+        binding.lifecycleOwner = this
         return binding.root
     }
 
@@ -69,6 +73,7 @@ class IngredientFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
         return when (item.itemId) {
             R.id.action_save -> {
                 saveIngredient()

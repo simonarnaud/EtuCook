@@ -9,13 +9,19 @@ val EXECUTOR: ExecutorService = Executors.newSingleThreadExecutor()
 
 class IngredientRepos(private val ingredientDao: IngredientDao) {
 
-    fun insertIngredient(ingredient: Ingredient) = EXECUTOR.execute { ingredientDao.insert(ingredient) }
+    fun insertIngredient(ingredient: Ingredient) {
+        ingredient.ingredientName.capitalize()
+        EXECUTOR.execute { ingredientDao.insert(ingredient) }
+    }
 
     fun deleteIngredient(id: Long?) = EXECUTOR.execute { ingredientDao.deleteIngredient(id) }
 
     fun deleteAllIngredients() = EXECUTOR.execute { ingredientDao.deleteAllIngredients() }
 
-    fun updateIngredient(ingredient: Ingredient) = EXECUTOR.execute { ingredientDao.updateIngredient(ingredient) }
+    fun updateIngredient(ingredient: Ingredient) {
+        ingredient.ingredientName.capitalize()
+        EXECUTOR.execute { ingredientDao.updateIngredient(ingredient) }
+    }
 
     fun getAllIngredients() =  ingredientDao.getAllIngredients()
 

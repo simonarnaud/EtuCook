@@ -38,7 +38,7 @@ class IngredientListFragment: Fragment(), IngredientRecyclerAdapter.OnItemClickL
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = IngredientListFragmentBinding.inflate(inflater)
         binding.ingredientListVM = ingredientListVM
-        //binding.lifecycleOwner = this
+        binding.lifecycleOwner = this
         return binding.root
     }
 

@@ -8,37 +8,101 @@
         <import type="sa.com.etucook.utilities.Converter"/>
     </data>
 
-<RelativeLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginRight="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginStart="8dp"
-                tools:context="sa.com.etucook.fragments.IngredientFragment">
+    <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:weightSum="3"
+    >
 
-    <TextView android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:id="@+id/ingredient_name"
-              android:layout_marginLeft="8dp"
-              android:layout_marginStart="8dp"
-              tools:text="Ingredient Name"
-              android:text="@{ingredientVM.ingredient.ingredientName}"
-    />
+        <RelativeLayout android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginStart="8dp"
+                        tools:context="sa.com.etucook.fragments.IngredientFragment"
+                        android:layout_weight="1"
+        >
 
-    <TextView android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:id="@+id/ingredient_cost"
-              android:layout_marginLeft="8dp"
-              android:layout_marginStart="8dp"
-              android:layout_marginTop="8dp"
-              android:layout_below="@+id/ingredient_name"
-              tools:text="Ingredient Cost"
-              android:text="@{Converter.floatToString(ingredientVM.ingredient.ingredientCost)}"
-    />
+            <ImageView android:layout_width="100dp"
+                       android:layout_height="100dp"
+                       android:src="@drawable/ingredient_icon"
+                       android:layout_centerInParent="true"
+                       android:layout_marginTop="20dp"
+            />
+        </RelativeLayout>
 
-</RelativeLayout>
+        <RelativeLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginStart="8dp"
+                        tools:context="sa.com.etucook.fragments.IngredientFragment"
+                        android:layout_weight="2"
+        >
+            <View android:layout_width="match_parent"
+                  android:layout_height="1dp"
+                  android:background="@android:color/background_dark"/>
+
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:id="@+id/ingredient_name_textview"
+                      android:layout_marginLeft="8dp"
+                      android:layout_marginStart="8dp"
+                      android:layout_marginTop="13dp"
+                      android:text="@string/ingredient_name"
+                      android:textColor="@android:color/background_dark"
+            />
+
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ingredient_name"
+                    android:layout_toRightOf="@+id/ingredient_name_textview"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_toEndOf="@+id/ingredient_name_textview"
+                    android:textColor="@android:color/background_dark"
+                    android:hint="@string/name"
+                    android:text="@={ingredientVM.ingredient.ingredientName}"
+            />
+
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:id="@+id/ingredient_cost_textview"
+                      android:layout_marginLeft="8dp"
+                      android:layout_marginStart="8dp"
+                      android:layout_marginTop="8dp"
+                      android:layout_below="@+id/ingredient_name"
+                      android:text="@string/ingredient_cost"
+                      android:textColor="@android:color/background_dark"
+            />
+
+            <EditText android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:id="@+id/ingredient_cost"
+                      android:layout_toRightOf="@+id/ingredient_name_textview"
+                      android:layout_marginStart="8dp"
+                      android:layout_marginLeft="8dp"
+                      android:layout_below="@+id/ingredient_name"
+                      android:layout_marginRight="8dp"
+                      android:layout_marginEnd="8dp"
+                      android:hint="@string/cost"
+                      android:text="@={Converter.floatToString(ingredientVM.ingredient.ingredientCost)}"
+                      android:layout_toEndOf="@+id/ingredient_name_textview"
+                      android:inputType="numberDecimal|numberSigned"
+            />
+
+        </RelativeLayout>
+    </LinearLayout>
 </layout>

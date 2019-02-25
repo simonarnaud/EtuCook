@@ -6,5 +6,9 @@
     <string name="delete_all_ingredients">Delete All Ingredients</string>
     <string name="create_new_ingredient">Create new Ingredient</string>
     <string name="error_occured">Une erreur s\'est produite</string>
-    <string name="ingredient_error_create">Une erreur s\'est produite lors de la création de l\'ingrédient</string>
+    <string name="ingredient_error_create">Le nom ou le coût de l\'ingrédient n\'a pas été saisit</string>
+    <string name="ingredient_name">Ingredient Name :</string>
+    <string name="ingredient_cost">Ingredient Cost :</string>
+    <string name="cost">Cost</string>
+    <string name="name">Name</string>
 </resources>

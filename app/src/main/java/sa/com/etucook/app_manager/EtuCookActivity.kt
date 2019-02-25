@@ -1,12 +1,18 @@
 package sa.com.etucook.app_manager
 
+import android.content.Context
 import android.os.Bundle
+import android.view.inputmethod.InputMethodManager
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.Navigator
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import kotlinx.android.synthetic.main.toolbar_md_activity.*
+import kotlinx.android.synthetic.main.toolbar_md_activity_content.*
 import sa.com.etucook.R
 import sa.com.etucook.fragments.IngredientFragment
 import sa.com.etucook.fragments.IngredientListFragment
@@ -20,6 +26,12 @@ class EtuCookActivity : AppCompatActivity(), IngredientListFragment.OnSomethingM
         super.onCreate(savedInstanceState)
         setContentView(R.layout.toolbar_md_activity)
 
+       /* isTwoPane = container_fragment_detail != null
+
+        if(!isTwoPane) {
+            removeDisplayedFragment()
+        }*/
+
         navController = Navigation.findNavController(this, R.id.nav_fragment)
 
         setSupportActionBar(toolbar)
@@ -28,8 +40,8 @@ class EtuCookActivity : AppCompatActivity(), IngredientListFragment.OnSomethingM
 
    // private var isTwoPane: Boolean = false
 
-  //  override fun createFragment() = IngredientListFragment()
-  //  override fun getLayoutResId() = R.layout.toolbar_md_activity
+    //override fun createFragment() = IngredientListFragment()
+    //override fun getLayoutResId() = R.layout.toolbar_md_activity
 
    /* override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,19 +54,15 @@ class EtuCookActivity : AppCompatActivity(), IngredientListFragment.OnSomethingM
     }*/
 
     override fun onIngredientSelected(ingredientId: Long) {
-        /*if (isTwoPane) {
+       /* if (isTwoPane) {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.container_fragment_detail, IngredientFragment.newInstance(ingredientUri))
                 .commit()
-        } else {
-            supportFragmentManager.beginTransaction()
-                .addToBackStack("ingredient_back")
-                .replace(R.id.container_fragment, IngredientFragment.newInstance(ingredientUri), "ingredient_back")
-                .commit()
-        }*/
+        } else {*/
+            val action = IngredientListFragmentDirections.actionIngredientDetail(ingredientId)
+            navController.navigate(action)
+       // }
 
-        val action = IngredientListFragmentDirections.actionIngredientDetail(ingredientId)
-        navController.navigate(action)
     }
 
     override fun onAddNewIngredient() {
@@ -68,16 +76,24 @@ class EtuCookActivity : AppCompatActivity(), IngredientListFragment.OnSomethingM
     }*/
 
     override fun onIngredientSaved() {
+        hideKeyBoard()
         navController.popBackStack()
     }
 
     override fun onIngredientDeleted() {
-        /*if(isTwoPane) {
+       /* if(isTwoPane) {
             removeDisplayedFragment()
-        } else {
-            supportFragmentManager.popBackStack()
-        }*/
+        } else {*/
+            hideKeyBoard()
+            navController.popBackStack()
+       // }
+    }
 
-        navController.popBackStack()
+    private fun hideKeyBoard() {
+        val view = this.currentFocus
+        if(view != null) {
+            val keyBoard = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            keyBoard.hideSoftInputFromWindow(view.windowToken, 0)
+        }
     }
 }
