@@ -1,4 +1,4 @@
-package sa.com.etucook
+package sa.com.etucook.app_manager
 
 import android.app.Application
 import sa.com.etucook.database.EtuCoockDataBase

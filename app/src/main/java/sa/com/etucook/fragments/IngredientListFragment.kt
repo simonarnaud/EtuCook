@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.ingredient_list_fragment.*
+import sa.com.etucook.R
 import sa.com.etucook.databinding.IngredientListFragmentBinding
 import sa.com.etucook.recycler_adapter.IngredientRecyclerAdapter
 import sa.com.etucook.view_models.IngredientListViewModel

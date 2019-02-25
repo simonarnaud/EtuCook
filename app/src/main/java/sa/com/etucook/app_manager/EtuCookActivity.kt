@@ -1,10 +1,31 @@
-package sa.com.etucook.activities
+package sa.com.etucook.app_manager
 
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
+import kotlinx.android.synthetic.main.toolbar_md_activity.*
+import sa.com.etucook.R
 import sa.com.etucook.fragments.IngredientFragment
 import sa.com.etucook.fragments.IngredientListFragment
 import sa.com.etucook.fragments.IngredientListFragmentDirections
 
-class IngredientListActivity : SimpleFragmentActivity(), IngredientListFragment.OnSomethingMoveInListFragment, IngredientFragment.OnInteractionListener {
+class EtuCookActivity : AppCompatActivity(), IngredientListFragment.OnSomethingMoveInListFragment, IngredientFragment.OnInteractionListener {
+
+    protected lateinit var navController: NavController
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.toolbar_md_activity)
+
+        navController = Navigation.findNavController(this, R.id.nav_fragment)
+
+        setSupportActionBar(toolbar)
+        toolbar.setupWithNavController(navController, AppBarConfiguration(navController.graph))
+    }
+
    // private var isTwoPane: Boolean = false
 
   //  override fun createFragment() = IngredientListFragment()

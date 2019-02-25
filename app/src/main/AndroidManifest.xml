@@ -4,7 +4,7 @@
           package="sa.com.etucook">
 
     <application
-            android:name=".EtuCookApplication"
+            android:name=".app_manager.EtuCookApplication"
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
@@ -12,7 +12,7 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activities.IngredientListActivity"
+        <activity android:name=".app_manager.EtuCookActivity"
         android:theme="@style/AppTheme.NoActionBar"
         android:label="@string/app_name">
             <intent-filter>
@@ -21,7 +21,6 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activities.IngredientActivity"/>
     </application>
 
 </manifest>

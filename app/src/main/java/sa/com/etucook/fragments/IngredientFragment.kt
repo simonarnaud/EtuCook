@@ -7,6 +7,7 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
+import sa.com.etucook.R
 import sa.com.etucook.database.EtuCoockDataBase
 import sa.com.etucook.databinding.IngredientFragmentBinding
 import sa.com.etucook.repository.IngredientRepos
