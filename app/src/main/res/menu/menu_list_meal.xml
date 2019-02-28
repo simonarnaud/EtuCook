@@ -12,4 +12,9 @@
             android:title="@string/get_market_place"
             app:showAsAction="never"/>
 
+    <item
+        android:id="@+id/see_ingredients_list"
+        android:title="@string/see_all_ingredients"
+        app:showAsAction="never"/>
+
 </menu>

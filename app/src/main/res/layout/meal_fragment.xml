@@ -97,28 +97,26 @@
                       android:layout_toEndOf="@+id/meal_name_textview"
                       android:inputType="numberDecimal|numberSigned"
             />
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/meal_cost"
+                        android:layout_marginTop="8dp"
+                        android:layout_centerHorizontal="true"
+                        android:text="@string/show_meal_ingredients"
+                        android:textColor="@android:color/background_dark"
+                        android:id="@+id/text_view_recette"
+                />
 
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/meal_cost"
-                    android:layout_marginTop="8dp"
-                    android:layout_centerHorizontal="true"
-                    android:text="@string/show_meal_ingredients"
-                    android:textColor="@android:color/background_dark"
-                    android:id="@+id/text_view_recette"
-            />
-
-            <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="GO"
-                    android:layout_below="@+id/text_view_recette"
-                    android:layout_marginTop="8dp"
-                    android:layout_centerHorizontal="true"
-                    android:id="@+id/button_show_ingredients"
-            />
-
+                <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="GO"
+                        android:layout_below="@+id/text_view_recette"
+                        android:layout_marginTop="8dp"
+                        android:layout_centerHorizontal="true"
+                        android:id="@+id/button_show_ingredients"
+                />
         </RelativeLayout>
     </LinearLayout>
 </layout>

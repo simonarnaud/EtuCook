@@ -36,6 +36,9 @@
         <action
                 android:id="@+id/action_map"
                 app:destination="@id/dest_map" />
+        <action
+                android:id="@+id/action_see_all_ingredient"
+                app:destination="@id/dest_ingredient_list" />
     </fragment>
     <fragment
             android:id="@+id/dest_meal"
@@ -48,12 +51,35 @@
                 android:defaultValue="0L" />
         <action
             android:id="@+id/action_list_ingredient"
-            app:destination="@+id/dest_ingredient_list"/>
+            app:destination="@+id/dest_own_ingredients"/>
     </fragment>
     <fragment
             android:id="@+id/dest_map"
             android:name="sa.com.etucook.fragments.MapFragment"
             android:label="Map"
             tools:layout="@layout/map_fragment" >
+    </fragment>
+    <fragment
+            android:id="@+id/dest_own_ingredients"
+            android:name="sa.com.etucook.fragments.IngredientMealFragment"
+            android:label="Own Ingredient"
+            tools:layout="@layout/ingredient_meal_fragment">
+        <argument
+                android:name="mealId"
+                app:argType="long"
+                android:defaultValue="0L" />
+        <action
+                android:id="@+id/add_ingredient_meal"
+                app:destination="@+id/dest_ingredient_meal"/>
+    </fragment>
+    <fragment
+            android:id="@+id/dest_ingredient_meal"
+            android:name="sa.com.etucook.fragments.AddIngredientMealFragment"
+            android:label="Add Ingredient to Meal"
+            tools:layout="@layout/ingredient_meal_fragment">
+        <argument
+                android:name="mealId"
+                app:argType="long"
+                android:defaultValue="0L" />
     </fragment>
 </navigation>

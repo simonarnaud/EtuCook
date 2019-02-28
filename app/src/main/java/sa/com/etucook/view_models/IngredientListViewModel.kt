@@ -3,6 +3,7 @@ package sa.com.etucook.view_models
 import androidx.lifecycle.ViewModel
 import sa.com.etucook.database.EtuCoockDataBase
 import sa.com.etucook.model.Ingredient
+import sa.com.etucook.repository.IngredientMealJoinRepos
 import sa.com.etucook.repository.IngredientRepos
 
 class IngredientListViewModel : ViewModel() {

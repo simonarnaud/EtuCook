@@ -38,7 +38,7 @@ class MealFragment : Fragment() {
 
         mealId = savedInstanceState?.getLong(MEAL_ID) ?: args.mealId
 
-        if(mealId == 0L) activity?.setTitle(getString(sa.com.etucook.R.string.create_new_meal))
+        if(mealId == 0L)  activity?.setTitle(getString(sa.com.etucook.R.string.create_new_meal))
 
         mealVM = ViewModelProviders.of(this, viewModelFactory { MealViewModel(MealRepos(EtuCoockDataBase.getInstance().mealDao()), mealId) })
             .get(MealViewModel::class.java)
@@ -63,6 +63,11 @@ class MealFragment : Fragment() {
 
         button_show_ingredients.setOnClickListener {
             showIngredients()
+        }
+
+        if(mealId == 0L) {
+            button_show_ingredients.visibility = View.GONE
+            text_view_recette.visibility = View.GONE
         }
     }
 

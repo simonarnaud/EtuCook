@@ -19,4 +19,6 @@
     <string name="euros">€</string>
     <string name="get_market_place">Get Market Place</string>
     <string name="show_meal_ingredients">Voir les ingrédients de la recette :</string>
+    <string name="see_all_ingredients">See All Ingredients</string>
+    <string name="add_ingredient_to_the_meal">Add Ingredient to the Meal</string>
 </resources>

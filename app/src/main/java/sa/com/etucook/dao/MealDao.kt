@@ -24,6 +24,6 @@ interface MealDao {
     @Update(onConflict = REPLACE)
     fun updateMeal(meal: Meal)
 
-    @Query("SELECT * FROM meal_table where meal_id == :id")
+    @Query("SELECT * FROM meal_table where id == :id")
     fun getMealById(id: Long?): LiveData<Meal>
 }

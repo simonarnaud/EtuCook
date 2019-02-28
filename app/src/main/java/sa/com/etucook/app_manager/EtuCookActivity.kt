@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.toolbar_md_activity.*
 import sa.com.etucook.R
 import sa.com.etucook.fragments.*
 
-class EtuCookActivity : AppCompatActivity(), IngredientListFragment.OnSomethingMoveInListFragment, IngredientFragment.OnInteractionListener, MealListFragment.OnSomethingMoveInListFragment, MealFragment.OnInteractionListener {
+class EtuCookActivity : AppCompatActivity(), IngredientMealFragment.OnSomethingMoveInListFragment,IngredientListFragment.OnSomethingMoveInListFragment, IngredientFragment.OnInteractionListener, MealListFragment.OnSomethingMoveInListFragment, MealFragment.OnInteractionListener {
 
     protected lateinit var navController: NavController
 
@@ -65,6 +65,11 @@ class EtuCookActivity : AppCompatActivity(), IngredientListFragment.OnSomethingM
         navController.navigate(action)
     }
 
+    override fun seeAllIngredients() {
+        val action = MealListFragmentDirections.actionSeeAllIngredient()
+        navController.navigate(action)
+    }
+
     override fun onShowIngredients() {
         val action = MealFragmentDirections.actionListIngredient()
         navController.navigate(action)
@@ -81,6 +86,11 @@ class EtuCookActivity : AppCompatActivity(), IngredientListFragment.OnSomethingM
 
     override fun onAddNewMeal() {
         navController.navigate(R.id.action_meal_detail)
+    }
+
+    override fun onAddNewIngredientMeal() {
+        val action = IngredientMealFragmentDirections.addIngredientMeal()
+        navController.navigate(action)
     }
 
     /*private fun removeDisplayedFragment() {

@@ -23,6 +23,7 @@ class MealListFragment: Fragment(), MealRecyclerAdapter.OnItemClickListener {
         fun onMealSelected(mealId: Long)
         fun onAddNewMeal()
         fun onMapRequired()
+        fun seeAllIngredients()
     }
     private var listener: OnSomethingMoveInListFragment? = null
 
@@ -70,6 +71,10 @@ class MealListFragment: Fragment(), MealRecyclerAdapter.OnItemClickListener {
             R.id.get_marketplace -> {
                 RetrofitFactory.getMarketPlace(activity)
                 listener?.onMapRequired()
+                true
+            }
+            R.id.see_ingredients_list -> {
+                listener?.seeAllIngredients()
                 true
             }
             else -> super.onOptionsItemSelected(item)

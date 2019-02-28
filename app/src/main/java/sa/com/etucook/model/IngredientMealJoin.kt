@@ -8,13 +8,12 @@ import androidx.room.ForeignKey.CASCADE
 @Entity(tableName = "ingredient_meal",
     primaryKeys = ["ingredientId", "mealId"],
     foreignKeys = [ForeignKey(entity = Ingredient::class,
-                              parentColumns = ["ingredient_id"],
+                              parentColumns = ["id"],
                               childColumns = ["ingredientId"],
                               onDelete = CASCADE),
                    ForeignKey(entity = Meal::class,
-                              parentColumns = ["meal_id"],
+                              parentColumns = ["id"],
                               childColumns = ["mealId"],
                               onDelete = CASCADE)]
 )
-data class IngredientMealJoin(val ingredientId: Long, val mealId: Long) {
-}
+data class IngredientMealJoin(val ingredientId: Long, val mealId: Long)

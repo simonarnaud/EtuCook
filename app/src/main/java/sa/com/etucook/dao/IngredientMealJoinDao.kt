@@ -16,12 +16,12 @@ interface IngredientMealJoinDao {
     fun insert(ingredientMealJoin: IngredientMealJoin)
 
     @Query("SELECT * from meal_table inner join ingredient_meal " +
-            "on meal_id = mealId " +
+            "on id = mealId " +
             "where ingredientId = :ingredientId")
     fun getMealsFromIngredient(ingredientId: Long): LiveData<List<Meal>>
 
     @Query("SELECT * from ingredient_table inner join ingredient_meal " +
-            "on ingredient_id = ingredientId " +
+            "on id = ingredientId " +
             "where mealId = :mealId")
     fun getIngredientsFromMeal(mealId: Long): LiveData<List<Ingredient>>
 }

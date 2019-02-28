@@ -17,13 +17,13 @@ interface IngredientDao {
     @Query("Delete from ingredient_table")
     fun deleteAllIngredients()
 
-    @Query("Delete from ingredient_table where ingredient_id == :id")
+    @Query("Delete from ingredient_table where id == :id")
     fun deleteIngredient(id: Long?)
 
     @Update(onConflict = REPLACE)
     fun updateIngredient(ingredient: Ingredient)
 
-    @Query("SELECT * FROM ingredient_table where ingredient_id == :id")
+    @Query("SELECT * FROM ingredient_table where id == :id")
     fun getIngredientById(id: Long?): LiveData<Ingredient>
 
 }

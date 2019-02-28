@@ -17,6 +17,5 @@ class MealViewModel(private val mealRepos: MealRepos, mealId: Long) : ViewModel(
             true
         }
     }
-
     fun deleteMeal() = meal.value?.let { mealRepos.deleteMeal(it) }
 }
