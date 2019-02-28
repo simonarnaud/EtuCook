@@ -3,22 +3,16 @@ package sa.com.etucook.app_manager
 import android.content.Context
 import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
-import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.Navigator
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import kotlinx.android.synthetic.main.toolbar_md_activity.*
-import kotlinx.android.synthetic.main.toolbar_md_activity_content.*
 import sa.com.etucook.R
-import sa.com.etucook.fragments.IngredientFragment
-import sa.com.etucook.fragments.IngredientListFragment
-import sa.com.etucook.fragments.IngredientListFragmentDirections
+import sa.com.etucook.fragments.*
 
-class EtuCookActivity : AppCompatActivity(), IngredientListFragment.OnSomethingMoveInListFragment, IngredientFragment.OnInteractionListener {
+class EtuCookActivity : AppCompatActivity(), IngredientListFragment.OnSomethingMoveInListFragment, IngredientFragment.OnInteractionListener, MealListFragment.OnSomethingMoveInListFragment, MealFragment.OnInteractionListener {
 
     protected lateinit var navController: NavController
 
@@ -65,8 +59,22 @@ class EtuCookActivity : AppCompatActivity(), IngredientListFragment.OnSomethingM
 
     }
 
+    override fun onMealSelected(mealId: Long) {
+        val action = MealListFragmentDirections.actionMealDetail(mealId)
+        navController.navigate(action)
+    }
+
+    override fun onShowIngredients() {
+        val action = MealFragmentDirections.actionListIngredient()
+        navController.navigate(action)
+    }
+
     override fun onAddNewIngredient() {
         navController.navigate(R.id.action_ingredient_detail)
+    }
+
+    override fun onAddNewMeal() {
+        navController.navigate(R.id.action_meal_detail)
     }
 
     /*private fun removeDisplayedFragment() {
@@ -80,6 +88,11 @@ class EtuCookActivity : AppCompatActivity(), IngredientListFragment.OnSomethingM
         navController.popBackStack()
     }
 
+    override fun onMealSaved() {
+        hideKeyBoard()
+        navController.popBackStack()
+    }
+
     override fun onIngredientDeleted() {
        /* if(isTwoPane) {
             removeDisplayedFragment()
@@ -87,6 +100,11 @@ class EtuCookActivity : AppCompatActivity(), IngredientListFragment.OnSomethingM
             hideKeyBoard()
             navController.popBackStack()
        // }
+    }
+
+    override fun onMealDeleted() {
+        hideKeyBoard()
+        navController.popBackStack()
     }
 
     private fun hideKeyBoard() {

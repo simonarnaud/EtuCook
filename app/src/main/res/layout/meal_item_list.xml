@@ -1,35 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp">
 
-    <ImageView android:layout_width="24dp"
-               android:layout_height="24dp"
-               android:id="@+id/meal_image"
-               android:src="@drawable/meal_icon"
-    />
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView android:layout_width="wrap_content"
-              android:layout_height="match_parent"
-              android:layout_marginLeft="8dp"
-              android:layout_marginStart="8dp"
-              android:id="@+id/name_meal"
-              android:textColor="@color/design_default_color_primary_dark"
-              android:layout_toRightOf="@+id/meal_image"
-              android:layout_toEndOf="@+id/meal_image"
-              android:layout_toLeftOf="@+id/cost_meal"
-              android:layout_toStartOf="@+id/cost_meal"/>
+    <data>
+        <variable name="meal" type="sa.com.etucook.model.Meal" />
+        <import type="sa.com.etucook.utilities.Converter"/>
+    </data>
 
-    <TextView android:layout_width="wrap_content"
-              android:layout_height="match_parent"
-              android:textColor="@color/colorPrimaryDark"
-              android:id="@+id/cost_meal"
-              android:layout_marginRight="8dp"
-              android:layout_marginEnd="8dp"
-              android:layout_alignParentRight="true"
-              android:layout_alignParentEnd="true"/>
+    <RelativeLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp">
 
-</RelativeLayout>
+        <ImageView android:layout_width="35dp"
+                   android:layout_height="35dp"
+                   android:id="@+id/meal_image"
+                   android:src="@drawable/meal_icon"
+        />
+
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginLeft="8dp"
+                  android:layout_marginStart="8dp"
+                  android:layout_marginRight="8dp"
+                  android:layout_marginEnd="8dp"
+                  android:layout_toLeftOf="@+id/cost_meal"
+                  android:id="@+id/name_meal"
+                  android:textColor="@color/colorPrimaryDark"
+                  android:layout_toRightOf="@+id/meal_image"
+                  android:layout_toEndOf="@+id/meal_image"
+                  tools:text="Meal Name"
+                  android:textSize="20sp"
+                  android:text="@{meal.mealName}"
+                  android:layout_toStartOf="@+id/cost_meal"/>
+
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:textColor="@color/colorPrimaryDark"
+                  android:id="@+id/cost_meal"
+                  tools:text="Meal Cost"
+                  android:textSize="20sp"
+                  android:layout_toLeftOf="@+id/euros"
+                  android:layout_marginRight="8dp"
+                  android:text="@{Converter.floatToString(meal.mealCost)}"
+                  android:layout_toStartOf="@+id/euros"
+                  android:layout_marginEnd="8dp"/>
+
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:textColor="@color/colorPrimaryDark"
+                  android:text="@string/euros"
+                  android:id="@+id/euros"
+                  android:textSize="20sp"
+                  android:layout_alignParentRight="true"
+                  android:layout_alignParentEnd="true"
+                  android:layout_marginRight="8dp"
+                  android:layout_marginEnd="8dp"/>
+
+    </RelativeLayout>
+
+</layout>

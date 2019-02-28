@@ -25,7 +25,5 @@ interface MealDao {
     fun updateMeal(meal: Meal)
 
     @Query("SELECT * FROM meal_table where meal_id == :id")
-    fun getMealById(id: Long): Meal
-
-
+    fun getMealById(id: Long?): LiveData<Meal>
 }

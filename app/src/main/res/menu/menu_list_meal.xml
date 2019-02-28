@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+            android:id="@+id/delete_all_meal"
+            android:title="@string/delete_all_meals"
+            app:showAsAction="never"/>
+
+    <item
+            android:id="@+id/get_marketplace"
+            android:title="@string/get_market_place"
+            app:showAsAction="never"/>
+
+</menu>

@@ -11,7 +11,6 @@ import sa.com.etucook.R
 import sa.com.etucook.databinding.IngredientListFragmentBinding
 import sa.com.etucook.recycler_adapter.IngredientRecyclerAdapter
 import sa.com.etucook.retrofit.RetrofitFactory
-import sa.com.etucook.retrofit.RetrofitService
 import sa.com.etucook.view_models.IngredientListViewModel
 import java.lang.RuntimeException
 

@@ -4,13 +4,19 @@
     <string name="save">Save</string>
     <string name="delete">Delete</string>
     <string name="delete_all_ingredients">Delete All Ingredients</string>
+    <string name="delete_all_meals">Delete All Meals</string>
     <string name="create_new_ingredient">Create new Ingredient</string>
+    <string name="create_new_meal">Create new Meal</string>
     <string name="error_occured">Une erreur s\'est produite</string>
     <string name="ingredient_error_create">Le nom ou le coût de l\'ingrédient n\'a pas été saisit</string>
+    <string name="meal_error_create">Le nom ou le coût du plat n\'a pas été saisit</string>
     <string name="ingredient_name">Ingredient Name :</string>
+    <string name="meal_name">Meal Name :</string>
     <string name="ingredient_cost">Ingredient Cost :</string>
+    <string name="meal_cost">Meal Cost :</string>
     <string name="cost">Cost</string>
     <string name="name">Name</string>
     <string name="euros">€</string>
     <string name="get_market_place">Get Market Place</string>
+    <string name="show_meal_ingredients">Voir les ingrédients de la recette :</string>
 </resources>

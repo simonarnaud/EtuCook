@@ -4,12 +4,8 @@ import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import android.view.*
-import android.view.inputmethod.InputMethodManager
-import androidx.activity.OnBackPressedCallback
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.Navigator
 import androidx.navigation.fragment.navArgs
 import sa.com.etucook.R
 import sa.com.etucook.database.EtuCoockDataBase
@@ -69,7 +65,7 @@ class IngredientFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.menu_ingredient, menu)
+        inflater.inflate(R.menu.menu_single_object, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -1,52 +1,41 @@
 package sa.com.etucook.recycler_adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import sa.com.etucook.R
+import androidx.recyclerview.widget.ListAdapter
+import sa.com.etucook.databinding.MealItemListBinding
 import sa.com.etucook.model.Meal
 
-class MealRecyclerAdapter(meals: ArrayList<Meal>, listener: OnItemClickListener): RecyclerView.Adapter<MealRecyclerAdapter.RecyclerViewHolder>() {
+class MealRecyclerAdapter(private val listener: OnItemClickListener): ListAdapter<Meal, MealRecyclerAdapter.RecyclerViewHolder>(MealDiff()) {
 
-    private var meals: List<Meal> = meals
-    private var listenerMeal: OnItemClickListener = listener
-
-    interface OnItemClickListener  {
-        fun onItemClick(meal: Meal)
+    interface OnItemClickListener {
+        fun onItemClick(mealId: Long)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MealRecyclerAdapter.RecyclerViewHolder {
-        return RecyclerViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.meal_item_list, parent, false))
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = RecyclerViewHolder(sa.com.etucook.databinding.MealItemListBinding.inflate(LayoutInflater.from(parent.context)), listener)
 
-    override fun getItemCount(): Int {
-        return meals.size
-    }
+    override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) = holder.bind(getItem(position))
 
-    override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
-        val currentMeal: Meal = meals[position]
-        val name = currentMeal.mealName.capitalize()
-        val cost = currentMeal.mealCost.toString() + " €"
+    class RecyclerViewHolder(private val binding: MealItemListBinding, listener: OnItemClickListener): RecyclerView.ViewHolder(binding.root) {
 
-        holder.mName.text = name
-        holder.mCost.text = cost
+        init {
+            itemView.setOnClickListener { binding.meal?.let { listener.onItemClick(it.id)} }
+        }
 
-        holder.bind(currentMeal, listenerMeal)
-    }
+        val meal get() = binding.meal
 
-    fun addMeals(listMeals: List<Meal>) {
-        meals = listMeals
-        notifyDataSetChanged()
-    }
-
-    class RecyclerViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        var mName = itemView.findViewById<TextView>(R.id.name_meal)
-        var mCost = itemView.findViewById<TextView>(R.id.cost_meal)
-
-        fun bind(meal: Meal, listener: OnItemClickListener) {
-            itemView.setOnClickListener { listener.onItemClick(meal) }
+        fun bind(meal: Meal) {
+            binding.meal = meal
+            binding.executePendingBindings()
         }
     }
+
+    //Class pour tester les différences entre les objets de la liste
+    private class MealDiff : DiffUtil.ItemCallback<Meal>() {
+        override fun areItemsTheSame(oldItem: Meal, newItem: Meal) = oldItem.id == newItem.id
+        override fun areContentsTheSame(oldItem: Meal, newItem: Meal) = oldItem == newItem
+    }
+
 }

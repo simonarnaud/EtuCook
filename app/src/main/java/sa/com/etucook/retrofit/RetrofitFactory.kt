@@ -8,7 +8,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 object RetrofitFactory {
 
-    const val BASE_URL = "http://overpass.openstreetmap.fr/api/"
+    const val BASE_URL = "http://overpass.openstreetmap.fr/api/interpreter/"
 
     private fun setRetrofitService(): RetrofitService {
         return Retrofit.Builder().baseUrl(BASE_URL)
@@ -32,7 +32,7 @@ object RetrofitFactory {
             }
         })*/
 
-        setRetrofitService().getMarkets("[out:json];%20node%20[amenity=marketplace]%20" +
+        /*setRetrofitService().getMarkets("[out:json];%20node%20[amenity=marketplace]%20" +
                 "(49.151676,-0.423753,49.194477,-0.344102)" +
                 ";%20out;")
             .enqueue(object : Callback<Markets> {
@@ -47,7 +47,22 @@ object RetrofitFactory {
             override fun onFailure(call: Call<Markets>, t: Throwable) {
                 error("Error occured when trying to get markets")
             }
-        })
+        })*/
+
+        setRetrofitService().test("http://overpass.openstreetmap.fr/api/interpreter?data=[out:json];%20node%20[amenity=marketplace]%20(49.151676, -0.423753,49.194477, -0.344102);%20out;")
+            .enqueue(object : Callback<Markets> {
+                override fun onResponse(call: Call<Markets>, response: Response<Markets>) {
+                    val markets = response.body()
+                    if (markets != null && markets.elements.isNotEmpty()) {
+                        println("HERE is ALL MARKET FROM API:")
+                        for (market in markets.elements)
+                            println("One market : ${market.tags.name}")
+                    }
+                }
+                override fun onFailure(call: Call<Markets>, t: Throwable) {
+                    error("Error occured when trying to get markets")
+                }
+            })
     }
 
 
