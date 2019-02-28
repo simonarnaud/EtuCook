@@ -65,8 +65,7 @@ class IngredientListFragment: Fragment(), IngredientRecyclerAdapter.OnItemClickL
                 true
             }
             R.id.get_marketplace -> {
-               // RetrofitFactory.getMarkets(49.151676F, -0.423753F,49.194477F, -0.344102F)
-                RetrofitFactory.getMarkets()
+                RetrofitFactory.getMarketPlace(activity)
                 true
             }
             else -> super.onOptionsItemSelected(item)

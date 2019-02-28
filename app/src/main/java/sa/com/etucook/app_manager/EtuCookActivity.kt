@@ -8,6 +8,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import kotlinx.android.synthetic.main.map_fragment.*
 import kotlinx.android.synthetic.main.toolbar_md_activity.*
 import sa.com.etucook.R
 import sa.com.etucook.fragments.*
@@ -66,6 +67,11 @@ class EtuCookActivity : AppCompatActivity(), IngredientListFragment.OnSomethingM
 
     override fun onShowIngredients() {
         val action = MealFragmentDirections.actionListIngredient()
+        navController.navigate(action)
+    }
+
+    override fun onMapRequired() {
+        val action = MealListFragmentDirections.actionMap()
         navController.navigate(action)
     }
 

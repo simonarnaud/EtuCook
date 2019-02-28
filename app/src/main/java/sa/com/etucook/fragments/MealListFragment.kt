@@ -1,8 +1,11 @@
 package sa.com.etucook.fragments
 
 import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -19,6 +22,7 @@ class MealListFragment: Fragment(), MealRecyclerAdapter.OnItemClickListener {
     interface OnSomethingMoveInListFragment {
         fun onMealSelected(mealId: Long)
         fun onAddNewMeal()
+        fun onMapRequired()
     }
     private var listener: OnSomethingMoveInListFragment? = null
 
@@ -64,8 +68,8 @@ class MealListFragment: Fragment(), MealRecyclerAdapter.OnItemClickListener {
                 true
             }
             R.id.get_marketplace -> {
-                // RetrofitFactory.getMarkets(49.151676F, -0.423753F,49.194477F, -0.344102F)
-                RetrofitFactory.getMarkets()
+                RetrofitFactory.getMarketPlace(activity)
+                listener?.onMapRequired()
                 true
             }
             else -> super.onOptionsItemSelected(item)

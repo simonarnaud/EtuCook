@@ -33,6 +33,9 @@
         <action
                 android:id="@+id/action_meal_detail"
                 app:destination="@id/dest_meal" />
+        <action
+                android:id="@+id/action_map"
+                app:destination="@id/dest_map" />
     </fragment>
     <fragment
             android:id="@+id/dest_meal"
@@ -46,5 +49,11 @@
         <action
             android:id="@+id/action_list_ingredient"
             app:destination="@+id/dest_ingredient_list"/>
+    </fragment>
+    <fragment
+            android:id="@+id/dest_map"
+            android:name="sa.com.etucook.fragments.MapFragment"
+            android:label="Map"
+            tools:layout="@layout/map_fragment" >
     </fragment>
 </navigation>
